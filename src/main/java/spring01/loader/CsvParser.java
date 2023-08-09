@@ -1,8 +1,5 @@
 package spring01.loader;
 
-import spring01.model.Option;
-import spring01.model.Question;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,11 +20,11 @@ public class CsvParser implements QuestionParser {
     }
 
     @Override
-    public List<Question> getQuestions() {
+    public Map<String, List<String[]>> getQuestions() {
         return parseCsvToMap();
     }
 
-    private  List<Question> parseCsvToMap() {
+    private  Map<String, List<String[]>> parseCsvToMap() {
         Map<String, List<String[]>> mapQuestionAndOptions = new HashMap<>();
         try (InputStream srcStream =
                      getClass().getClassLoader().getResourceAsStream(resourceName);
@@ -45,7 +42,7 @@ public class CsvParser implements QuestionParser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return parseMapToList(mapQuestionAndOptions);
+        return mapQuestionAndOptions;
     }
 
     private List<String[]> addOption(String[] values, Map<String, List<String[]>> mapQuestionAndOptions) {
@@ -58,27 +55,5 @@ public class CsvParser implements QuestionParser {
         }
         options.add(newOption);
         return options;
-    }
-
-    private List<Question> parseMapToList(Map<String, List<String[]>> mapQuestionAndOptions) {
-        List<Question> questions = new ArrayList<>();
-        for (String questionText: mapQuestionAndOptions.keySet()) {
-            List<String[]> options = mapQuestionAndOptions.get(questionText);
-            Question question = createQuestion(questionText, options);
-            questions.add(question);
-        }
-        return questions;
-    }
-
-    private Question createQuestion(String questionText, List<String[]> options) {
-        Question question = new Question(questionText);
-        for (String[] option: options) {
-            if (option[1].equals("true")) {
-                question.setAnswer(option[0]);
-            }
-            Option optionData = new Option(option[0]);
-            question.addOption(optionData);
-        }
-        return question;
     }
 }

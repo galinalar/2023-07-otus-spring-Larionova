@@ -7,7 +7,8 @@ import java.util.List;
 
 public class QuestionMapper {
     public String questionToString(Question question) {
-        StringBuilder str = new StringBuilder("Question: " + question.getQuestion() + "\n" + "Options: ");
+        StringBuilder str = new StringBuilder("Question " + question.getID() + ": " + question.getQuestion()
+                + "\n" + "Options: ");
         List<Option> options = question.getOptions();
         for (int i = 0; i < options.size(); i++) {
             Option option = options.get(i);

@@ -7,6 +7,8 @@ public class Question {
 
     private final String question;
 
+    private int id;
+
     private String answer;
 
     private List<Option> options;
@@ -19,6 +21,14 @@ public class Question {
 
     public String getQuestion() {
         return question;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAnswer() {
