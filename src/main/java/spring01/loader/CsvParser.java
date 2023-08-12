@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class CsvParser implements QuestionParser {
+public class CsvParser implements QuizParser {
 
     private static final String DELIMITER = ";";
 
@@ -20,12 +18,12 @@ public class CsvParser implements QuestionParser {
     }
 
     @Override
-    public Map<String, List<String[]>> getQuestions() {
-        return parseCsvToMap();
+    public List<String[]> getQuizList() {
+        return parseCsvToListOfString();
     }
 
-    private  Map<String, List<String[]>> parseCsvToMap() {
-        Map<String, List<String[]>> mapQuestionAndOptions = new HashMap<>();
+    private  List<String[]> parseCsvToListOfString() {
+        List<String[]> lines = new ArrayList<>();
         try (InputStream srcStream =
                      getClass().getClassLoader().getResourceAsStream(resourceName);
              BufferedReader br = new BufferedReader(new InputStreamReader(srcStream))) {
@@ -36,24 +34,13 @@ public class CsvParser implements QuestionParser {
                     first = false;
                 } else {
                     String[] values = line.split(DELIMITER);
-                    mapQuestionAndOptions.put(values[0], addOption(values, mapQuestionAndOptions));
+                    lines.add(values);
                 }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return mapQuestionAndOptions;
+        return lines;
     }
 
-    private List<String[]> addOption(String[] values, Map<String, List<String[]>> mapQuestionAndOptions) {
-        String[] newOption = {values[1], values[2]};
-        List<String[]> options;
-        if (mapQuestionAndOptions.containsKey(values[0])) {
-            options = mapQuestionAndOptions.get(values[0]);
-        } else {
-            options = new ArrayList<>();
-        }
-        options.add(newOption);
-        return options;
-    }
 }
