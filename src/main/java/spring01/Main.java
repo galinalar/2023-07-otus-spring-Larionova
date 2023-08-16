@@ -8,7 +8,7 @@ import spring01.test.TestService;
 public class Main {
     public static void main(String[] args) {
         try (AbstractApplicationContext context =
-                     new ClassPathXmlApplicationContext("/spring-context.xml")) {
+                     new ClassPathXmlApplicationContext("/spring01/spring-context.xml")) {
             QuizService quizService = context.getBean(QuizService.class);
             quizService.createAndPrintQuiz();
 
