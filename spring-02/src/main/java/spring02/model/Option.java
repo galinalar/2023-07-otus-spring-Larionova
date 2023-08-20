@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Option {
-    private String option;
+    private final String option;
 }

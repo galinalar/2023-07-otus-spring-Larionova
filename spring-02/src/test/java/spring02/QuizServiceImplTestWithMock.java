@@ -1,10 +1,8 @@
 package spring02;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.Answers;
 import org.mockito.Mockito;
 import spring02.model.Option;
 import spring02.model.Question;
@@ -18,19 +16,19 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QuizServiceImplTestWithMock {
 
     QuestionServiceImpl questionService = Mockito.mock(QuestionServiceImpl.class);
     QuizService quizService;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
-        quizService = new QuizServiceImpl(questionService, 1, 3, System.in);
+        quizService = new QuizServiceImpl(questionService, 1, 3);
     }
 
     @Test
     public void createQuizTest(){
-        setUp();
         when(questionService.getQuestions()).thenReturn(getQuestion());
         List<Question> questions = quizService.createQuiz();
         assertEquals(3, questions.size());
@@ -38,13 +36,11 @@ public class QuizServiceImplTestWithMock {
 
     @Test
     public void checkQuizPassedTest(){
-        setUp();
         assertEquals(Result.PASSED, quizService.checkQuiz(getQuestion(), getStudentAnswerPassed()));
     }
 
     @Test
     public void checkQuizFailedTest(){
-        setUp();
         assertEquals(Result.FAILED, quizService.checkQuiz(getQuestion(), getStudentAnswerFailed()));
     }
 

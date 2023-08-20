@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring02.model.Option;
 import spring02.model.Question;
+import spring02.model.Result;
 import spring02.model.Student;
 import spring02.model.StudentQuiz;
-import spring02.model.Result;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,15 +20,14 @@ public class QuizServiceImpl implements QuizService {
 
     private final int questionCounter;
 
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
 
     @Autowired
     public QuizServiceImpl(QuestionServiceImpl questionService,
-                           int passCondition, int questionCounter, InputStream inStream) {
+                           int passCondition, int questionCounter) {
         this.questionService = questionService;
         this.passCondition = passCondition;
         this.questionCounter = questionCounter;
-        this.scanner = new Scanner(inStream);
     }
 
     @Override
@@ -60,6 +58,21 @@ public class QuizServiceImpl implements QuizService {
         return new StudentQuiz(student, answers, result);
     }
 
+    @Override
+    public Result checkQuiz(List<Question> questions, List<Option> studentAnswers) {
+        int right = 0;
+        for (int i = 0; i < questionCounter; i++) {
+            if (questions.get(i).getAnswer().equals(studentAnswers.get(i).getOption())) {
+                right++;
+            }
+        }
+        if (right >= passCondition) {
+            return Result.PASSED;
+        } else {
+            return Result.FAILED;
+        }
+    }
+
     private Student createStudent() {
         System.out.println("Input name: ");
         String name = scanner.nextLine();
@@ -75,20 +88,5 @@ public class QuizServiceImpl implements QuizService {
             answers.add(new Option(scanner.nextLine()));
         }
         return answers;
-    }
-
-    @Override
-    public Result checkQuiz(List<Question> questions, List<Option> studentAnswers) {
-        int right = 0;
-        for (int i = 0; i < questionCounter; i++) {
-            if (questions.get(i).getAnswer().equals(studentAnswers.get(i).getOption())) {
-                right++;
-            }
-        }
-        if (right >= passCondition) {
-            return Result.PASSED;
-        } else {
-            return Result.FAILED;
-        }
     }
 }

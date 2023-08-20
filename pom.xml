@@ -6,7 +6,12 @@
 
     <groupId>2023-07-otus-spring</groupId>
     <artifactId>2023-07-otus-spring-Larionova</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>spring-02</module>
+        <module>spring-01</module>
+    </modules>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>
@@ -14,6 +19,7 @@
         <spring.version>6.0.6</spring.version>
         <checkstyle-plugin.version>3.2.1</checkstyle-plugin.version>
         <checkstyle.version>10.9.3</checkstyle.version>
+        <junit.platform.version>1.8.1</junit.platform.version>
         <checkstyle.config.url>https://raw.githubusercontent.com/OtusTeam/Spring/master/checkstyle.xml</checkstyle.config.url>
         <junit.version>5.10.0</junit.version>
         <mockito.version>5.2.0</mockito.version>
@@ -82,14 +88,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>16</source>
-                    <target>16</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class QuestionMapper {
+public class QuestionMapperImpl implements QuestionMapper {
+    @Override
     public String questionToString(Question question) {
-        StringBuilder str = new StringBuilder("Question " + question.getID() + ": " + question.getQuestion()
+        StringBuilder str = new StringBuilder("Question " + question.getId() + ": " + question.getQuestion()
                 + "\n" + "Options: ");
         List<Option> options = question.getOptions();
         for (int i = 0; i < options.size(); i++) {
@@ -22,6 +23,7 @@ public class QuestionMapper {
         return str.toString();
     }
 
+    @Override
     public List<Question> getQuestionList(List<String[]> lines) {
         Map<String, List<String[]>> mapQuestionAndOptions = parseArrToMap(lines);
         return convertMapToList(mapQuestionAndOptions);

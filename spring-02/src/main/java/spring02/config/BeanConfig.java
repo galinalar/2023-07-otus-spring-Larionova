@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import spring02.loader.CsvParser;
-import spring02.mapper.QuestionMapper;
+import spring02.mapper.QuestionMapperImpl;
 import spring02.service.QuestionServiceImpl;
 import spring02.service.QuizServiceImpl;
 
@@ -18,12 +18,12 @@ public class BeanConfig {
     }
 
     @Bean
-    public QuestionMapper questionMapper() {
-        return new QuestionMapper();
+    public QuestionMapperImpl questionMapper() {
+        return new QuestionMapperImpl();
     }
 
     @Bean
-    public QuestionServiceImpl questionService(QuestionMapper questionMapper, CsvParser csvParser) {
+    public QuestionServiceImpl questionService(QuestionMapperImpl questionMapper, CsvParser csvParser) {
         return new QuestionServiceImpl(questionMapper, csvParser);
     }
 
@@ -31,6 +31,6 @@ public class BeanConfig {
     public QuizServiceImpl quizServiceImpl(QuestionServiceImpl questionService,
                                        @Value("${pass-condition}") int passCondition,
                                        @Value("${count-question}") int questionCounter) {
-        return new QuizServiceImpl(questionService, passCondition, questionCounter, System.in);
+        return new QuizServiceImpl(questionService, passCondition, questionCounter);
     }
 }

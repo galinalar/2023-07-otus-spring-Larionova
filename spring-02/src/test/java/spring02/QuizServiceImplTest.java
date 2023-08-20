@@ -1,10 +1,10 @@
 package spring02;
 
 import org.junit.jupiter.api.Test;
-import spring02.mapper.QuestionMapper;
+import spring02.loader.CsvParser;
+import spring02.mapper.QuestionMapperImpl;
 import spring02.model.Option;
 import spring02.model.Question;
-import spring02.loader.CsvParser;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class QuizServiceImplTest {
     @Test
     void parseTest() {
         List<String[]> quizList = new CsvParser("quiz.csv").getQuizList();
-        List<Question> questions = new QuestionMapper().getQuestionList(quizList);
+        List<Question> questions = new QuestionMapperImpl().getQuestionList(quizList);
         List<Question> questionsExp = getExpected();
         for (int i = 0; i < 5; i++){
             assertEquals(questionsExp.get(i).getQuestion(), questions.get(i).getQuestion());

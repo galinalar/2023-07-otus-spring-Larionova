@@ -3,19 +3,19 @@ package spring02.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring02.loader.CsvParser;
-import spring02.mapper.QuestionMapper;
+import spring02.mapper.QuestionMapperImpl;
 import spring02.model.Question;
 
 import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    private QuestionMapper questionMapper;
+    private QuestionMapperImpl questionMapper;
 
     private CsvParser csvParser;
 
     @Autowired
-    public QuestionServiceImpl(QuestionMapper questionMapper, CsvParser csvParser) {
+    public QuestionServiceImpl(QuestionMapperImpl questionMapper, CsvParser csvParser) {
         this.questionMapper = questionMapper;
         this.csvParser = csvParser;
     }
