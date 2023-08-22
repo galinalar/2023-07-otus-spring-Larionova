@@ -1,6 +1,7 @@
 package spring02.loader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class CsvParser implements QuizParser {
     private final String resourceName;
 
     @Autowired
-    public CsvParser(String resourceName) {
+    public CsvParser(@Value("${resource-file}") String resourceName) {
         this.resourceName = resourceName;
     }
 

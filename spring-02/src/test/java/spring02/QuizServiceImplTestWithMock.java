@@ -7,9 +7,7 @@ import org.mockito.Mockito;
 import spring02.model.Option;
 import spring02.model.Question;
 import spring02.model.Result;
-import spring02.service.QuestionServiceImpl;
-import spring02.service.QuizService;
-import spring02.service.QuizServiceImpl;
+import spring02.service.*;
 
 import java.util.List;
 
@@ -21,10 +19,12 @@ public class QuizServiceImplTestWithMock {
 
     QuestionServiceImpl questionService = Mockito.mock(QuestionServiceImpl.class);
     QuizService quizService;
+    IOService ioService;
 
     @BeforeAll
     public void setUp() {
-        quizService = new QuizServiceImpl(questionService, 1, 3);
+        ioService = new IOServiceImpl();
+        quizService = new QuizServiceImpl(questionService, ioService, 1, 3);
     }
 
     @Test

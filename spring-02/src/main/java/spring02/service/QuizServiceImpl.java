@@ -1,6 +1,7 @@
 package spring02.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import spring02.model.Option;
 import spring02.model.Question;
@@ -14,20 +15,23 @@ import java.util.Scanner;
 
 @Service
 public class QuizServiceImpl implements QuizService {
-    private QuestionServiceImpl questionService;
+    private QuestionService questionService;
+
+    private IOService ioService;
 
     private final int passCondition;
 
     private final int questionCounter;
 
-    private final Scanner scanner = new Scanner(System.in);
-
     @Autowired
-    public QuizServiceImpl(QuestionServiceImpl questionService,
-                           int passCondition, int questionCounter) {
+    public QuizServiceImpl(QuestionService questionService, IOService ioService,
+                           @Value("${pass-condition}") int passCondition,
+                           @Value("${count-question}") int questionCounter
+                           ) {
         this.questionService = questionService;
         this.passCondition = passCondition;
         this.questionCounter = questionCounter;
+        this.ioService = ioService;
     }
 
     @Override
@@ -75,9 +79,9 @@ public class QuizServiceImpl implements QuizService {
 
     private Student createStudent() {
         System.out.println("Input name: ");
-        String name = scanner.nextLine();
+        String name = ioService.readString();
         System.out.println("Input last name: ");
-        String lastName = scanner.nextLine();
+        String lastName = ioService.readString();
         return new Student(name, lastName);
     }
 
@@ -85,7 +89,7 @@ public class QuizServiceImpl implements QuizService {
         List<Option> answers = new ArrayList<>();
         for (int i = 1; i <= questionCounter; i++) {
             System.out.println("Input answer to " + i + " question: ");
-            answers.add(new Option(scanner.nextLine()));
+            answers.add(new Option(ioService.readString()));
         }
         return answers;
     }
