@@ -1,22 +1,31 @@
-package spring02.service;
+package spring03.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import spring02.model.Option;
-import spring02.model.Question;
-import spring02.model.Result;
-import spring02.model.Student;
-import spring02.model.StudentQuiz;
+import spring03.model.Option;
+import spring03.model.Question;
+import spring03.model.Result;
+import spring03.model.Student;
+import spring03.model.StudentQuiz;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class QuizServiceImpl implements QuizService {
+
+    public static final String INPUT_NAME_MESSAGE = "input.name.message";
+
+    public static final String INPUT_LAST_NAME_MESSAGE = "input.last.name.message";
+
+    public static final String INPUT_ANSWER = "input.answer";
+
     private QuestionService questionService;
 
     private IOService ioService;
+
+    private LocalizationService localizationService;
 
     private final int passCondition;
 
@@ -24,13 +33,13 @@ public class QuizServiceImpl implements QuizService {
 
     @Autowired
     public QuizServiceImpl(QuestionService questionService, IOService ioService,
-                           @Value("${pass-condition}") int passCondition,
-                           @Value("${count-question}") int questionCounter
-                           ) {
+                           LocalizationService localizationService, @Value("${pass-condition}") int passCondition,
+                           @Value("${count-question}") int questionCounter) {
         this.questionService = questionService;
         this.passCondition = passCondition;
         this.questionCounter = questionCounter;
         this.ioService = ioService;
+        this.localizationService = localizationService;
     }
 
     @Override
@@ -57,7 +66,7 @@ public class QuizServiceImpl implements QuizService {
         Student student = createStudent();
         List<Option> answers = writeAnswers();
         Result result = checkQuiz(questions, answers);
-        System.out.println(result);
+        System.out.println(localizationService.getMessage(result.toString()));
         return new StudentQuiz(student, answers, result);
     }
 
@@ -77,9 +86,9 @@ public class QuizServiceImpl implements QuizService {
     }
 
     private Student createStudent() {
-        System.out.println("Input name: ");
+        System.out.println(localizationService.getMessage(INPUT_NAME_MESSAGE));
         String name = ioService.readString();
-        System.out.println("Input last name: ");
+        System.out.println(localizationService.getMessage(INPUT_LAST_NAME_MESSAGE));
         String lastName = ioService.readString();
         return new Student(name, lastName);
     }
@@ -87,7 +96,7 @@ public class QuizServiceImpl implements QuizService {
     private List<Option> writeAnswers() {
         List<Option> answers = new ArrayList<>();
         for (int i = 1; i <= questionCounter; i++) {
-            System.out.println("Input answer to " + i + " question: ");
+            System.out.println(localizationService.getMessage(INPUT_ANSWER, i));
             answers.add(new Option(ioService.readString()));
         }
         return answers;

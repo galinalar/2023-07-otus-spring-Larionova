@@ -1,0 +1,10 @@
+resource-file: quiz
+
+pass-condition: 3
+
+count-question: 5
+
+localization:
+  locale: en_US
+  autoconfiguration:
+    enabled: true
