@@ -1,4 +1,4 @@
-package spring03;
+package spring03.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import spring03.model.Option;
 import spring03.model.Question;
 import spring03.model.Result;
-import spring03.service.*;
 
 import java.util.List;
 

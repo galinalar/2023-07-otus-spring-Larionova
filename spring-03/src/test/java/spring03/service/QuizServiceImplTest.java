@@ -1,25 +1,23 @@
-package spring03;
+package spring03.service;
 
 import org.junit.jupiter.api.Test;
-import spring03.loader.CsvParser;
-import spring03.mapper.QuestionMapperImpl;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import spring03.model.Option;
 import spring03.model.Question;
-import spring03.service.LocaleProvider;
-import spring03.service.LocalizationService;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QuizServiceImplTest {
 
-    LocalizationService localizationService;
-    LocaleProvider localeProvider;
+    @Autowired
+    QuizService quizService;
+
     @Test
     void parseTest() {
-        List<String[]> quizList = new CsvParser("quiz", localeProvider).getQuizList();
-        List<Question> questions = new QuestionMapperImpl(localizationService).getQuestionList(quizList);
+        List<Question> questions =  quizService.createQuiz();
         List<Question> questionsExp = getExpected();
         for (int i = 0; i < 5; i++){
             assertEquals(questionsExp.get(i).getQuestion(), questions.get(i).getQuestion());
