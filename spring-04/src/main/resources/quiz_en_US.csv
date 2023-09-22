@@ -1,0 +1,16 @@
+﻿Q;O;A
+How many months have more than 29 days?;1;false
+How many months have more than 29 days?;11;true
+How many months have more than 29 days?;12;false
+Which country is the largest in the world?;Russia;true
+Which country is the largest in the world?;China;false
+Which country is the largest in the world?;USA;false
+Which country is the largest in the world?;India;false
+2+2/2=?;2;false
+2+2/2=?;3;true
+One of the Java frameworks...;Winter;false
+One of the Java frameworks...;Spring;true
+One of the Java frameworks...;Summer;false
+One of the Java frameworks...;Autumn;false
+How many t are in the word letter?;1;false
+How many t are in the word letter?;2;true
