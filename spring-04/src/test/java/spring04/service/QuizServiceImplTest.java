@@ -1,7 +1,6 @@
 package spring04.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import spring04.loader.CsvParser;
 import spring04.mapper.QuestionMapperImpl;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QuizServiceImplTest {
 
     @Autowired

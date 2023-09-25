@@ -1,8 +1,8 @@
 resource-file: quiz
 
-pass-condition: 3
+pass-condition: 1
 
-count-question: 5
+count-question: 3
 
 localization:
   locale: ru-RU

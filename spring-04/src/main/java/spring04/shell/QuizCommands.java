@@ -1,18 +1,18 @@
-package spring04.service;
+package spring04.shell;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import spring04.service.QuizService;
 
 @RequiredArgsConstructor
 @ShellComponent
 public class QuizCommands {
-    private final ApplicationRunner applicationRunner;
+    private final QuizService quizService;
 
     @ShellMethod(value = "start", key = {"-st", "--start"})
     public void startTest() throws Exception {
-        applicationRunner.run(null);
+        quizService.startQuiz();
     }
 
     @ShellMethod(value = "exit", key = {"-ext", "--exit"})

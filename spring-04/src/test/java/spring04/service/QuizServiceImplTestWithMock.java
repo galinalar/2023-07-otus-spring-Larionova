@@ -1,10 +1,14 @@
 package spring04.service;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import spring04.model.Option;
 import spring04.model.Question;
 import spring04.model.Result;
@@ -14,21 +18,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SpringBootTest
+@ContextConfiguration(classes = QuizServiceImpl.class)
+@ExtendWith(MockitoExtension.class)
+@TestPropertySource(locations = "classpath:application.yml")
 public class QuizServiceImplTestWithMock {
-    QuestionServiceImpl questionService = Mockito.mock(QuestionServiceImpl.class);
-    @Autowired
-    QuizService quizService;
-    @Autowired
+    @MockBean
+    QuestionServiceImpl questionService;
+    @MockBean
     IOService ioService;
-    @Autowired
+    @MockBean
     LocalizationService localizationService;
-
-    @BeforeAll
-    public void setUp() {
-        ioService = new IOServiceImpl();
-        quizService = new QuizServiceImpl(questionService, ioService, localizationService, 1, 3);
-    }
+    @Value("${pass-condition}") int passCondition;
+    @Value("${count-question}") int questionCounter;
+    @InjectMocks
+    QuizService quizService= new QuizServiceImpl(questionService, ioService, localizationService,1,3);
 
     @Test
     public void createQuizTest(){
