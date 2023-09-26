@@ -1,20 +1,17 @@
-package spring03.service;
+package spring04.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import spring03.loader.CsvParser;
-import spring03.mapper.QuestionMapperImpl;
-import spring03.model.Option;
-import spring03.model.Question;
+import spring04.loader.CsvParser;
+import spring04.mapper.QuestionMapperImpl;
+import spring04.model.Option;
+import spring04.model.Question;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QuizServiceImplTest {
-
 
     @Autowired
     LocalizationService localizationService;
@@ -37,7 +34,6 @@ public class QuizServiceImplTest {
 
         }
     }
-
 
     private List<Question> getExpected() {
         Question question1 = new Question("How many months have more than 29 days?");

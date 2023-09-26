@@ -1,0 +1,10 @@
+resource-file: quiz
+
+pass-condition: 1
+
+count-question: 3
+
+localization:
+  locale: ru-RU
+  autoconfiguration:
+    enabled: true
