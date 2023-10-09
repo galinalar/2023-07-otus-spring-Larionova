@@ -16,13 +16,11 @@ public class BookServiceImpl implements BookService {
     private final BookDao bookDao;
 
     @Override
-    @Transactional
     public List<BookDto> getAll() {
         return bookDao.getAll();
     }
 
     @Override
-    @Transactional
     public BookDto getBookById(Long id) {
         return bookDao.getById(id);
     }

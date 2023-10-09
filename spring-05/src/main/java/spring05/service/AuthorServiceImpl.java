@@ -2,7 +2,6 @@ package spring05.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import spring05.dao.AuthorDao;
 import spring05.dto.AuthorDto;
 import spring05.mapper.AuthorMapper;
@@ -18,7 +17,6 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorMapper mapper;
 
     @Override
-    @Transactional
     public List<AuthorDto> getAll() {
         return dao.getAll().stream()
                 .map(mapper::map).toList();
