@@ -14,9 +14,9 @@ public interface BookService {
 
     Book getBookDomainById(Long id);
 
-    void saveBook(Book book);
+    void saveBook(String name, Long authorId, Long genreId);
 
-    void updateBook(Book book);
+    void updateBook(Long id, String name, Long authorId, Long genreId);
 
     void deleteBookById(Long id);
 

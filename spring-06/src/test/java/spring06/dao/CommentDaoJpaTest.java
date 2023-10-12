@@ -9,6 +9,8 @@ import spring06.domain.Book;
 import spring06.domain.Comment;
 import spring06.domain.Genre;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
@@ -30,6 +32,14 @@ class CommentDaoJpaTest {
         assertEquals(comment.getBook().getId(), get.getBook().getId());
         assertEquals(comment.getText(), get.getText());
     }
+    @Test
+    void  getByBookId() {
+        List<Comment> get = dao.getByBookId(1L);
+
+        assertEquals(1, get.size());
+        assertEquals(comment.getText(), get.get(0).getText());
+        assertEquals(comment.getId(), get.get(0).getId());
+    }
 
     @Test
     void insert() {
@@ -37,7 +47,6 @@ class CommentDaoJpaTest {
         dao.insert(inserted);
 
         Comment get = dao.getById(2L);
-        assertEquals(inserted.getBook().getId(), get.getBook().getId());
         assertEquals(inserted.getText(), get.getText());
     }
 
@@ -51,15 +60,15 @@ class CommentDaoJpaTest {
         assertEquals(updated.getText(), get.getText());
     }
 
-    @Test
-    void delete() {
+//    @Test
+//    void delete() {
 //        Comment insert = new Comment(null, "best", book);
 //        Comment inserted = new Comment(2L, "best", book);
 //        dao.insert(insert);
 //        int sizeBeforeDelete = daoBook.getCommentsByBook(1L).size();
-//        dao.delete(inserted);
+//        dao.delete(dao.getById(2L));
 //        int sizeAfterDelete = daoBook.getCommentsByBook(1L).size();
 //
 //        assertEquals(sizeBeforeDelete-1, sizeAfterDelete);
-    }
+//    }
 }

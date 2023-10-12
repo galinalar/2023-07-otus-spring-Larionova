@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring06.dao.BookDao;
+import spring06.domain.Author;
 import spring06.domain.Book;
+import spring06.domain.Genre;
 import spring06.dto.BookDto;
 import spring06.dto.CommentDto;
 import spring06.mapper.BookMapper;
@@ -21,6 +23,10 @@ public class BookServiceImpl implements BookService {
     private final BookMapper mapper;
 
     private final CommentMapper commentMapper;
+
+    private final AuthorService authorService;
+
+    private final GenreService genreService;
 
     @Override
     public List<BookDto> getAll() {
@@ -40,13 +46,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void saveBook(Book book) {
+    public void saveBook(String name, Long authorId, Long genreId) {
+        Author author = authorService.geAuthorById(authorId);
+        Genre genre = genreService.geGenreById(genreId);
+        Book book = new Book(null, name, author, genre, null);
         bookDao.insert(book);
     }
 
     @Override
     @Transactional
-    public void updateBook(Book book) {
+    public void updateBook(Long id, String name, Long authorId, Long genreId) {
+        Author author = authorService.geAuthorById(authorId);
+        Genre genre = genreService.geGenreById(genreId);
+        Book book = new Book(id, name, author, genre, null);
         bookDao.update(book);
     }
 

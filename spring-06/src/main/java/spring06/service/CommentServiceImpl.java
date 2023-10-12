@@ -1,12 +1,14 @@
 package spring06.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spring06.dao.CommentDao;
 import spring06.domain.Comment;
 import spring06.dto.CommentDto;
 import spring06.mapper.CommentMapper;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +39,12 @@ public class CommentServiceImpl implements CommentService {
     public void deleteCommentById(Long id) {
         Comment comment = commentDao.getById(id);
         commentDao.delete(comment);
+    }
+
+    @Override
+    @Transactional
+    public List<CommentDto> getByBookId(Long id) {
+        return commentDao.getByBookId(id).stream()
+                .map(commentMapper::map).toList();
     }
 }

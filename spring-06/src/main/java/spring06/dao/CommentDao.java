@@ -2,6 +2,8 @@ package spring06.dao;
 
 import spring06.domain.Comment;
 
+import java.util.List;
+
 public interface CommentDao {
 
     Comment getById(Long id);
@@ -11,4 +13,6 @@ public interface CommentDao {
     void update(Comment comment);
 
     void delete(Comment comment);
+
+    List<Comment> getByBookId(Long id);
 }

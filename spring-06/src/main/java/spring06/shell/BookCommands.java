@@ -4,9 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import spring06.domain.Author;
-import spring06.domain.Book;
-import spring06.domain.Genre;
 import spring06.service.AuthorService;
 import spring06.service.BookService;
 import spring06.service.GenreService;
@@ -38,19 +35,13 @@ public class BookCommands {
     @ShellMethod(value = "add book", key = {"add"})
     public void addBook(@ShellOption String name, @ShellOption(defaultValue = "1") Long authorId,
                         @ShellOption(defaultValue = "1") Long genreId) {
-        Author author = authorService.geAuthorById(authorId);
-        Genre genre = genreService.geGenreById(genreId);
-        Book book = new Book(null, name, author, genre, null);
-        bookService.saveBook(book);
+        bookService.saveBook(name, authorId, genreId);
     }
 
     @ShellMethod(value = "update book", key = {"update", "u"})
     public void updateBook(@ShellOption Long id, @ShellOption String name, @ShellOption Long authorId,
                            @ShellOption Long genreId) {
-        Author author = authorService.geAuthorById(authorId);
-        Genre genre = genreService.geGenreById(genreId);
-        Book book = new Book(id, name, author, genre, null);
-        bookService.updateBook(book);
+        bookService.updateBook(id, name, authorId, genreId);
     }
 
     @ShellMethod(value = "get comments of book", key = {"bc"})

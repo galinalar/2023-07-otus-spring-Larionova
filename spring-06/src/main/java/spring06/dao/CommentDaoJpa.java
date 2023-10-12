@@ -2,9 +2,16 @@ package spring06.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 import spring06.domain.Comment;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -30,6 +37,20 @@ public class CommentDaoJpa implements CommentDao {
     @Override
     public void delete(Comment comment) {
         entityManager.remove(comment);
+    }
+
+    @Override
+    public List<Comment> getByBookId(Long id) {
+        Session session = (Session)entityManager.unwrap(Session.class);
+        CriteriaBuilder criteria = session.getCriteriaBuilder();
+        CriteriaQuery<Comment> critQuery = criteria.createQuery(Comment.class);
+
+        Root<Comment> root = critQuery.from(Comment.class);
+        critQuery.select(root).where(criteria.equal(root.get("book"), id));
+        Query<Comment> query = session.createQuery(critQuery);
+        List<Comment> results = query.getResultList();
+        session.close();
+        return results;
     }
 
 }

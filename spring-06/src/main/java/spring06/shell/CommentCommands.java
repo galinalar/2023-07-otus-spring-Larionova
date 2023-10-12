@@ -36,4 +36,10 @@ public class CommentCommands {
         Comment comment = new Comment(id, text, bookService.getBookDomainById(bookId));
         commentService.updateComment(comment);
     }
+
+
+    @ShellMethod(value = "get comments of book", key = {"cb"})
+    public String getCommentBook(@ShellOption Long id) {
+        return commentService.getByBookId(id).toString();
+    }
 }
