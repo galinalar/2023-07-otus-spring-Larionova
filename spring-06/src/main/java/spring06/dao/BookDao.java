@@ -15,6 +15,4 @@ public interface BookDao {
     void deleteById(Book book);
 
     void update(Book book);
-
-    List<Comment> getCommentsByBook(Long id);
 }

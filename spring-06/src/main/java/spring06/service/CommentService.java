@@ -15,4 +15,6 @@ public interface CommentService {
     void deleteCommentById(Long id);
 
     List<CommentDto> getByBookId(Long id);
+
+    List<CommentDto> getComByBookId(Long id);
 }

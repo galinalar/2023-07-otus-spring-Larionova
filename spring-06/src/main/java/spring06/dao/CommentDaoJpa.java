@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+import spring06.domain.Book;
 import spring06.domain.Comment;
 
 import java.util.List;
@@ -51,6 +52,12 @@ public class CommentDaoJpa implements CommentDao {
         List<Comment> results = query.getResultList();
         session.close();
         return results;
+    }
+
+    @Override
+    public List<Comment> getComByBookId(Long id) {
+        Book book = entityManager.find(Book.class, id);
+        return book.getComments();
     }
 
 }

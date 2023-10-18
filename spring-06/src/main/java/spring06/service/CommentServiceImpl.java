@@ -47,4 +47,11 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.getByBookId(id).stream()
                 .map(commentMapper::map).toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CommentDto> getComByBookId(Long id) {
+        return commentDao.getComByBookId(id).stream()
+                .map(commentMapper::map).toList();
+    }
 }

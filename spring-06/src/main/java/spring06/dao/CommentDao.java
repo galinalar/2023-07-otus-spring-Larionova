@@ -15,4 +15,6 @@ public interface CommentDao {
     void delete(Comment comment);
 
     List<Comment> getByBookId(Long id);
+
+    List<Comment> getComByBookId(Long id);
 }

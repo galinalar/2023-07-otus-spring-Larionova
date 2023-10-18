@@ -19,6 +19,4 @@ public interface BookService {
     void updateBook(Long id, String name, Long authorId, Long genreId);
 
     void deleteBookById(Long id);
-
-    List<CommentDto> getCommentByBook(Long id);
 }

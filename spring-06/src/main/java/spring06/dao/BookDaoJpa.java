@@ -42,10 +42,4 @@ public class BookDaoJpa implements BookDao {
     public void update(Book book) {
         entityManager.merge(book);
     }
-
-    @Override
-    public List<Comment> getCommentsByBook(Long id) {
-        Book book = entityManager.find(Book.class, id);
-        return book.getComments();
-    }
 }

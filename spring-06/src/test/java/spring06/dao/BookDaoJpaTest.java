@@ -67,14 +67,4 @@ class BookDaoJpaTest {
         assertEquals(updated.getId(), get.getId());
     }
 
-    @Test
-    void getCommentsByBook() {
-        Comment comment = new Comment(1L, "not good", expected1);
-        List<Comment> get = dao.getCommentsByBook(1L);
-
-        assertEquals(1, get.size());
-        assertEquals(comment.getText(), get.get(0).getText());
-        assertEquals(comment.getBook().getId(), get.get(0).getBook().getId());
-        assertEquals(comment.getId(), get.get(0).getId());
-    }
 }

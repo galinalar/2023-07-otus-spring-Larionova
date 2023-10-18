@@ -69,9 +69,4 @@ public class BookServiceImpl implements BookService {
         bookDao.deleteById(book);
     }
 
-    @Override
-    public List<CommentDto> getCommentByBook(Long id) {
-        return bookDao.getCommentsByBook(id).stream()
-                .map(commentMapper::map).toList();
-    }
 }

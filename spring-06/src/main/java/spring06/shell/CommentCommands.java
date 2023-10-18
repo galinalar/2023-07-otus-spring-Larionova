@@ -37,9 +37,13 @@ public class CommentCommands {
         commentService.updateComment(comment);
     }
 
-
     @ShellMethod(value = "get comments of book", key = {"cb"})
     public String getCommentBook(@ShellOption Long id) {
         return commentService.getByBookId(id).toString();
+    }
+
+    @ShellMethod(value = "get comments of book", key = {"cb2"})
+    public String getCommentBook2(@ShellOption Long id) {
+        return commentService.getComByBookId(id).toString();
     }
 }

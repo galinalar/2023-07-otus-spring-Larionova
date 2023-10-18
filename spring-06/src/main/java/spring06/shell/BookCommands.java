@@ -43,9 +43,4 @@ public class BookCommands {
                            @ShellOption Long genreId) {
         bookService.updateBook(id, name, authorId, genreId);
     }
-
-    @ShellMethod(value = "get comments of book", key = {"bc"})
-    public String getCommentBook(@ShellOption Long id) {
-        return bookService.getCommentByBook(id).toString();
-    }
 }
