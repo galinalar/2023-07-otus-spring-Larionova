@@ -18,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CommentDaoJpaTest {
     @Autowired
     private CommentDaoJpa dao;
-    @Autowired
-    private BookDaoJpa daoBook;
 
     Author author = new Author(1L, "Unknown");
     Genre genre = new Genre(2L, "Horr");
@@ -46,7 +44,7 @@ class CommentDaoJpaTest {
         Comment inserted = new Comment(null, "best", book);
         dao.insert(inserted);
 
-        Comment get = dao.getById(2L);
+        Comment get = dao.getById(3L);
         assertEquals(inserted.getText(), get.getText());
     }
 
@@ -60,15 +58,14 @@ class CommentDaoJpaTest {
         assertEquals(updated.getText(), get.getText());
     }
 
-//    @Test
-//    void delete() {
-//        Comment insert = new Comment(null, "best", book);
-//        Comment inserted = new Comment(2L, "best", book);
-//        dao.insert(insert);
-//        int sizeBeforeDelete = daoBook.getCommentsByBook(1L).size();
-//        dao.delete(dao.getById(2L));
-//        int sizeAfterDelete = daoBook.getCommentsByBook(1L).size();
-//
-//        assertEquals(sizeBeforeDelete-1, sizeAfterDelete);
-//    }
+    @Test
+    void delete() {
+        Comment insert = new Comment(null, "best", book);
+        dao.insert(insert);
+        int sizeBeforeDelete = dao.getByBookId(1L).size();
+        dao.delete(dao.getById(2L));
+        int sizeAfterDelete = dao.getByBookId(1L).size();
+
+        assertEquals(sizeBeforeDelete-1, sizeAfterDelete);
+    }
 }

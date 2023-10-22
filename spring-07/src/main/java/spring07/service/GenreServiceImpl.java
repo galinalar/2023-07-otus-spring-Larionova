@@ -8,6 +8,7 @@ import spring07.mapper.GenreMapper;
 import spring07.repository.GenreRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreDto> getAll() {
-        return repository.findAll().stream()
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::map).toList();
     }
 

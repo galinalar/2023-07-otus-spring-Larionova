@@ -2,6 +2,7 @@ package spring07.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,7 +48,6 @@ class BookServiceImplTest {
     Book expected1 = new Book(1L, "Dracula", author, genre, null);
     Book expectedNull1 = new Book(null, "Dracula", author, genre, null);
     BookDto expectedDto1 = new BookDto(1L, "Dracula", authorDto, genreDto);
-    BookDto expectedDtoNull1 = new BookDto(null, "Dracula", authorDto, genreDto);
 
     @Test
     void getAll() {
@@ -70,7 +70,11 @@ class BookServiceImplTest {
 
         service.saveBook("Dracula", 1L, 2L);
 
-        verify(repository, times(1)).save(eq(expectedNull1));
+        ArgumentCaptor<Book> captor = ArgumentCaptor.forClass(Book.class);
+        verify(repository).save(captor.capture());
+        assertTrue(captor.getValue().getName().equals(expectedNull1.getName()));
+        assertTrue(captor.getValue().getAuthor().equals(author));
+        assertTrue(captor.getValue().getGenre().equals(genre));
     }
 
     @Test
@@ -79,8 +83,12 @@ class BookServiceImplTest {
         when(genreService.geGenreById(any())).thenReturn(genre);
 
         service.saveBook("Dracula", 1L, 2L);
-        service.updateBook(1L, "Dracula", 1L, 2L);
+        service.updateBook(1L, "Dracula2", 1L, 2L);
 
-        verify(repository, times(1)).save(eq(expected1));
+        ArgumentCaptor<Book> captor = ArgumentCaptor.forClass(Book.class);
+        verify(repository, times(2)).save(captor.capture());
+        assertTrue(captor.getValue().getName().equals("Dracula2"));
+        assertTrue(captor.getValue().getAuthor().equals(author));
+        assertTrue(captor.getValue().getGenre().equals(genre));
     }
 }

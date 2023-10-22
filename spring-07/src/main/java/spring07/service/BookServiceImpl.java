@@ -11,6 +11,7 @@ import spring07.mapper.BookMapper;
 import spring07.repository.BookRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAll() {
-        return repository.findAll().stream()
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::map).toList();
     }
 
@@ -41,7 +42,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void saveBook(String name, Long authorId, Long genreId) {
         Author author = authorService.geAuthorById(authorId);
         Genre genre = genreService.geGenreById(genreId);
@@ -50,7 +50,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void updateBook(Long id, String name, Long authorId, Long genreId) {
         Author author = authorService.geAuthorById(authorId);
         Genre genre = genreService.geGenreById(genreId);
@@ -59,7 +58,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteBookById(Long id) {
         Book book = repository.findById(id).orElseThrow(RuntimeException::new);
         repository.delete(book);

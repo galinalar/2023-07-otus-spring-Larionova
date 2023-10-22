@@ -8,6 +8,7 @@ import spring07.mapper.AuthorMapper;
 import spring07.repository.AuthorRepository;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorDto> getAll() {
-        return repository.findAll().stream()
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::map).toList();
     }
 

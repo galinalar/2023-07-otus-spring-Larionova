@@ -23,19 +23,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public void saveComment(Comment comment) {
         repository.save(comment);
     }
 
     @Override
-    @Transactional
     public void updateComment(Comment comment) {
         repository.save(comment);
     }
 
     @Override
-    @Transactional
     public void deleteCommentById(Long id) {
         Comment comment =  repository.findById(id).orElseThrow(RuntimeException::new);
         repository.delete(comment);
