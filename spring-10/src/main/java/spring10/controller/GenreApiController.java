@@ -3,9 +3,7 @@ package spring10.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring10.dto.AuthorDto;
 import spring10.dto.GenreDto;
-import spring10.service.AuthorService;
 import spring10.service.GenreService;
 
 import java.util.List;
