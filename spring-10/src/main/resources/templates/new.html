@@ -21,15 +21,15 @@
       margin-top: 10px;
     }
   </style>
+  <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
   <script>
         function saveBook() {
-            const savedBookContainer = document.getElementById("saved-book")
             const nameInput = document.getElementById("book-name-input")
-            const aInput = document.getElementById("book-a-input")
-            const gInput = document.getElementById("book-g-input")
+            const aInput = document.getElementById("authorList")
+            const gInput = document.getElementById("genreList")
             const book = { name: nameInput.value,
-            author: aInput.value,
-            genre: gInput.value}
+            author: aInput.options[aInput.selectedIndex].id,
+            genre: gInput.options[gInput.selectedIndex].id}
             fetch("api/books/", {
                 method: 'POST',
                 headers: {
@@ -37,30 +37,24 @@
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(book)})
-            .then(rawResponse => rawResponse.json())
-            .then(json => savedBookContainer.innerHTML = JSON.stringify(json, null, 4))
         }
     </script>
 </head>
 <body>
 
 <h3>Form for new book creation:</h3>
-<form id="edit-form" action="new.html" th:method="post" th:object="${book}">
-  <div class="row" hidden="hidden">
-    <label for="book-id-input">id:</label>
-    <input id="book-id-input" name="name" type="text" value="${book.id}"/>
-  </div>
+<form id="edit-form"  th:object="${book}">
   <div class="row">
     <label for="book-name-input">Name:</label>
-    <input id="book-name-input" name="name" type="text" value="${book.name}"/>
+    <input id="book-name-input" name="name" type="text" value="Book name" />
   </div>
   <div class="row">
-    <label for="book-a-input">Author:</label>
-    <input id="book-a-input" name="name" type="text" value="${book.author}"/>
+    <label for="authorList">Author:</label>
+    <select id="authorList"></select>
   </div>
   <div class="row">
-    <label for="book-g-input">Genre:</label>
-    <input id="book-g-input" name="name" type="text" value="${book.genre}"/>
+    <label for="genreList">Genre:</label>
+    <select id="genreList"></select>
   </div>
 
   <div class="row">
@@ -68,9 +62,31 @@
     <a href="books.html" th:href="@{/}"><button type="button">Go Back</button></a>
   </div>
 </form>
+<script>
+  $(function () {
+      $.get('/api/authors/').done(function (authors) {
+          authors.forEach(function (author) {
+                          $('#authorList').append(`
+<option  th:value="${author.name}" id="${author.name}"
+                  th:text="${author.name}">${author.name}</option>
 
-<h3>Saved book:</h3>
-<pre id = "saved-book"></pre>
+              `)
+          });
+      })
+  });
+</script>
+<script>
+  $(function () {
+      $.get('/api/genres/').done(function (genres) {
+          genres.forEach(function (genre) {
+                          $('#genreList').append(`
+<option  th:value="${genre.name}" id="${genre.name}"
+                  th:text="${genre.name}" >${genre.name}</option>
 
+              `)
+          });
+      })
+  });
+</script>
 </body>
 </html>

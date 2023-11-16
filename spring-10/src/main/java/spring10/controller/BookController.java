@@ -20,8 +20,8 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/edit")
-    public String editPage(@RequestParam("id") long id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editPage(@PathVariable Long id, Model model) {
         BookDto book = bookService.getBookById(id);
         model.addAttribute("book", book);
         return "editBook";
@@ -30,10 +30,5 @@ public class BookController {
     @GetMapping("/add")
     public String newBook(Model model) {
         return "new";
-    }
-
-    @PostMapping("/{id}")
-    public String deleteBook(@PathVariable Long id) {
-        return "redirect:/";
     }
 }

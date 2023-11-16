@@ -26,6 +26,16 @@
 
   <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
   <link rel="icon" href="data:,">
+  <script>
+    function delBook(id) {
+    fetch("/" + id, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }})
+}
+  </script>
 </head>
 <body>
 <h3>Books:</h3>
@@ -54,13 +64,11 @@
                         <td>${book.author}</td>
                         <td>${book.genre}</td>
                         <td>
-      <a href="editBook.html" th:href="@{/edit(id=${book.id})}">Edit</a>
-      <div style="display: inline-block;">
-        <form th:action="@{/{id}(id=${book.id})}" th:method="post">
-          <input type="hidden" name="_method" value="delete"/>
-          <button type="submit">Delete</button>
-        </form>
-      </div>
+
+    <button type="button" onclick="delBook(${book.id})">Delete</button>
+    <form action="/edit/${book.id}">
+    <button type="submit">Edit</button>
+    </form>
     </td>
                     </tr>
                 `)
