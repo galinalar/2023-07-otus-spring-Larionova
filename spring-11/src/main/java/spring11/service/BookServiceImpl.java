@@ -2,6 +2,8 @@ package spring11.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -41,6 +43,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Mono<BookDto> saveBook(BookDto bookDto) {
         return getBook(bookDto)
                 .publishOn(Schedulers.boundedElastic())
@@ -49,12 +52,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Mono<BookDto> updateBook(BookDto bookDto) {
         return getBook(bookDto).publishOn(Schedulers.boundedElastic())
                 .flatMap(repository::save).map(mapper::map);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Mono<Void> deleteBookById(Long id) {
         return repository.deleteById(id);
     }

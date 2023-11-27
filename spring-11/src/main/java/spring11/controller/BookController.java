@@ -29,6 +29,10 @@ public class BookController {
         model.addAttribute("books", variable);
         return "editBook";
     }
+    @GetMapping("/edit")
+    public String editProba(@PathVariable Long id, Model model) {
+        return "editproba";
+    }
 
     @GetMapping("/add")
     public String newBook(Model model) {

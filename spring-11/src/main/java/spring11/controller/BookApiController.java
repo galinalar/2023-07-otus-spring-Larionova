@@ -30,7 +30,7 @@ public class BookApiController {
 
     @DeleteMapping("/api/books/{id}")
     public void deleteBook(@PathVariable Long id) {
-        bookService.deleteBookById(id);
+        bookService.deleteBookById(id).subscribe();
     }
 
     @PutMapping("/api/books/{id}")
