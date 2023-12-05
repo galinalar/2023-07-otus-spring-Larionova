@@ -11,6 +11,8 @@ import reactor.core.publisher.Mono;
 import spring11.dto.BookDto;
 import spring11.service.BookService;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class BookController {
@@ -25,8 +27,8 @@ public class BookController {
     public String editPage(@PathVariable Long id, Model model) {
         IReactiveDataDriverContextVariable variable =
                 new ReactiveDataDriverContextVariable(bookService.getBookById(id).flux(), 1);
-        Mono<BookDto> book = bookService.getBookById(id);
-        model.addAttribute("books", variable);
+        List<BookDto> book = List.of(bookService.getBookById(id).block());
+        model.addAttribute("books", book);
         return "editBook";
     }
     @GetMapping("/edit")
