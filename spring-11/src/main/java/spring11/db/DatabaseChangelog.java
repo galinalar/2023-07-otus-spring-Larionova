@@ -2,29 +2,30 @@ package spring11.db;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.decorator.impl.MongockTemplate;
+import org.springframework.data.mongodb.core.ReactiveMongoOperations;
+import reactor.core.publisher.Mono;
 import spring11.domain.Author;
 import spring11.domain.Book;
 import spring11.domain.Genre;
 
 @ChangeLog
 public class DatabaseChangelog {
-    private Author readyAuthor1;
+    private Mono<Author> readyAuthor1;
 
-    private Author readyAuthor2;
+    private Mono<Author> readyAuthor2;
 
-    private Author readyAuthor3;
+    private Mono<Author> readyAuthor3;
 
-    private Genre readyGenre1;
+    private Mono<Genre> readyGenre1;
 
-    private Genre readyGenre2;
+    private Mono<Genre> readyGenre2;
 
-    private Genre readyGenre3;
+    private Mono<Genre> readyGenre3;
 
-    private Book readyBook;
+    private Mono<Book> readyBook;
 
     @ChangeSet(order = "001", id = "authors", author = "larionova")
-    public void addAuthors(MongockTemplate mongoTemplate) {
+    public void addAuthors(ReactiveMongoOperations mongoTemplate) {
         Author author1 = new Author();
         author1.setName("Unknown");
         author1.setId(1L);
@@ -42,7 +43,7 @@ public class DatabaseChangelog {
     }
 
     @ChangeSet(order = "002", id = "genres", author = "larionova")
-    public void addGenres(MongockTemplate mongoTemplate) {
+    public void addGenres(ReactiveMongoOperations mongoTemplate) {
         Genre genre1 = new Genre();
         genre1.setName("Unknown");
         genre1.setId(1L);
@@ -60,11 +61,17 @@ public class DatabaseChangelog {
     }
 
     @ChangeSet(order = "003", id = "books", author = "larionova")
-    public void addBooks(MongockTemplate mongoTemplate) {
+    public void addBooks(ReactiveMongoOperations mongoTemplate) {
+        Author author2 = new Author();
+        author2.setName("Bram Stoker");
+        author2.setId(2L);
+        Genre genre3 = new Genre();
+        genre3.setName("Fantasy");
+        genre3.setId(3L);
         Book book = new Book();
         book.setName("Dracula");
-        book.setAuthor(readyAuthor2);
-        book.setGenre(readyGenre3);
+        book.setAuthor(author2);
+        book.setGenre(genre3);
         book.setId(1L);
         readyBook = mongoTemplate.save(book);
     }
