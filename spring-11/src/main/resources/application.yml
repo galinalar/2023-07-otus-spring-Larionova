@@ -1,0 +1,19 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: larionova11
+
+  thymeleaf:
+    cache: false
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package: spring11.db
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
