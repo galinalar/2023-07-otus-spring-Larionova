@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import spring09.dto.BookDto;
-import spring09.mapper.BookMapperImpl;
+import spring09.mapper.BookMapper;
 import spring09.service.AuthorService;
 import spring09.service.BookService;
 import spring09.service.GenreService;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @WebMvcTest
 @Import(BookController.class)
-@ContextConfiguration(classes = {BookMapperImpl.class})
+@ContextConfiguration(classes = {BookMapper.class})
 class BookControllerTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
