@@ -1,0 +1,9 @@
+version: '1'
+services:
+  app:
+    container_name: spring1516
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
