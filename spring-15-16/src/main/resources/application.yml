@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: info
+
+    org.springframework.integration: debug
+server:
+  port: 8080
