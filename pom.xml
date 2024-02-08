@@ -24,6 +24,7 @@
         <module>spring-13</module>
         <module>spring-14</module>
         <module>spring-15-16</module>
+        <module>spring-17-18</module>
     </modules>
 
     <properties>
