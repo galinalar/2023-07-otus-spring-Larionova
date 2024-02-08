@@ -24,8 +24,10 @@ public class CustomHealthIndicator implements HealthIndicator {
         } catch (InterruptedException e) {
             return Health.down().build();
         }
-        if (!result.isEmpty()){
+        if (!result.isEmpty()) {
             return Health.up().withDetail("Book detail ", result).build();
-        }else return Health.down().build();
+        } else {
+            return Health.down().build();
+        }
     }
 }
